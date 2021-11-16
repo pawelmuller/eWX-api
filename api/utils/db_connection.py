@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_secrets import DB_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
-from users_DTO import User
+from api.DTO.users_DTO import User
 
 
 if __name__ == '__main__':

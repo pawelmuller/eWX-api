@@ -1,11 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_secrets import DB_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
+
 from api.DTO.users_DTO import User
+from api.DTO.units_DTO import Unit
+from database_secrets import DB_VPN_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
 
 
 if __name__ == '__main__':
-    engine = create_engine(f"postgresql://{DB_LOGIN}:{DB_PASSWORD}@{DB_URL}/{DB_NAME}", echo=False)  # echo is for debug
+    engine = create_engine(f"postgresql://{DB_LOGIN}:{DB_PASSWORD}@{DB_VPN_URL}/{DB_NAME}",
+                           echo=False)  # echo is for debug
     Session = sessionmaker(engine)
     session = Session()
 

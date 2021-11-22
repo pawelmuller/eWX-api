@@ -21,8 +21,9 @@ jobs:
           name: Push to Artifatory
           command: |
             python -m build
+            cd dist
             ./jfrog config add ew4-pypi --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_APIKEY --interactive=false
-            ./jfrog rt u "dist/*" ew4-pypi --build-name=Build --build-number=$CIRCLE_BUILD_NUM --flat=false
+            ./jfrog rt u "*" ew4-pypi --build-name=Build --build-number=$CIRCLE_BUILD_NUM --flat=false
 workflows:
   sample:
     jobs:

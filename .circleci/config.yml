@@ -32,7 +32,7 @@ jobs:
           name: Test database
           command: |
             sudo apt-get update
-            sudo apt-get install postgresql-client-9.6
+            sudo apt-get install postgresql-client
             whoami
             psql -d $TEST_DATABASE_URL -c "CREATE TABLE test (name char(25));"
             psql -d $TEST_DATABASE_URL -c "INSERT INTO test VALUES ('John'), ('Joanna'), ('Jennifer');"

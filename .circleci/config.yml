@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@1.5.0
+
 jobs:
   build-and-test:
 
@@ -25,6 +28,14 @@ jobs:
       - run:
           name: Install jFrog CLI
           command: curl -fL https://getcli.jfrog.io | sh
+      - run:
+          name: Test database
+          command: |
+            sudo apt-get install postgresql-client-9.6
+            whoami
+            psql -d $TEST_DATABASE_URL -c "CREATE TABLE test (name char(25));"
+            psql -d $TEST_DATABASE_URL -c "INSERT INTO test VALUES ('John'), ('Joanna'), ('Jennifer');"
+            psql -d $TEST_DATABASE_URL -c "SELECT * from test"
       - run:
           name: Run tests
           command: python -m unittest tests/test_hello_world.py

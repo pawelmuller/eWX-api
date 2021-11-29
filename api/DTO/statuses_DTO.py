@@ -11,8 +11,5 @@ class Status(Base):
     name = Column(String)
     description = Column(String)
 
-    # Foreign keys
-    proposal_id = Column(Integer, ForeignKey("Proposal.proposal_id"))
-
     # Affiliations
-    proposal = relationship("Proposal", back_populates="expenses", foreign_keys=[proposal_id])
+    proposals = relationship("Proposal", back_populates="status", foreign_keys="[Proposal.status_id]")

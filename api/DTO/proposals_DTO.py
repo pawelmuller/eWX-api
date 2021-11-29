@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Column, Integer, String
-from api.DTO.common_DTO import Base, users_units_association_table
+from api.DTO.common_DTO import Base
 
 
 class Proposal(Base):
@@ -12,9 +12,12 @@ class Proposal(Base):
     description = Column(String)
 
     # Foreign keys
-    user_id = Column(Integer, ForeignKey("User.user_id"))
-    status_id = Column(Integer, ForeignKey("Status.status_id"))
+    user_id = Column(Integer, ForeignKey("users.user_id"))
+    status_id = Column(Integer, ForeignKey("statuses.status_id"))
 
     # Affiliations
-    units = relationship("Unit", secondary=users_units_association_table, back_populates="users")
+    user = relationship("User", back_populates="proposals", foreign_keys=[user_id])
+    status = relationship("Status", back_populates="proposals", foreign_keys=[status_id])
+    advances = relationship("Advance", back_populates="proposal", foreign_keys="[Advance.proposal_id]")
+    comments = relationship("Comment", back_populates="proposal", foreign_keys="[Comment.proposal_id]")
     expenses = relationship("Expense", back_populates="proposal", foreign_keys="[Expense.proposal_id]")

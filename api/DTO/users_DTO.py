@@ -17,3 +17,6 @@ class User(Base):
 
     # Affiliations
     units = relationship("Unit", secondary=users_units_association_table, back_populates="users")
+    proposals = relationship("Proposal", back_populates="user", foreign_keys="[Proposal.user_id]")
+    advances = relationship("Advance", back_populates="user", foreign_keys="[Advance.recipient_id]")
+    comments = relationship("Comment", back_populates="user", foreign_keys="[Comment.user_id]")

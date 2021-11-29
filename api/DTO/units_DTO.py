@@ -22,3 +22,4 @@ class Unit(Base):
 
     # Affiliations
     users = relationship("User", secondary=users_units_association_table, back_populates="units")
+    funding_sources = relationship("FundingSource", back_populates="units", foreign_keys="[FundingSource.unit_id]")

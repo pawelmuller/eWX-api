@@ -14,7 +14,7 @@ class Expense(Base):
     type = Column(String)
 
     # Foreign keys
-    proposal_id = Column(Integer, ForeignKey("Proposal.proposal_id"))
+    proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"))
 
     # Relations
     proposal = relationship("Proposal", back_populates="expenses", foreign_keys=[proposal_id])

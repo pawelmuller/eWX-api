@@ -11,6 +11,8 @@ class Unit(Base):
     type = Column(String)
     name = Column(String)
     description = Column(String)
+
+    # Foreign keys
     chairperson_id = Column(Integer, ForeignKey("users.user_id"))
     treasurer_id = Column(Integer, ForeignKey("users.user_id"))
 

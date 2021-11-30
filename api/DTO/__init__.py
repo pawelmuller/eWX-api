@@ -1,6 +1,7 @@
+from api.DTO.common_DTO import users_units_association_table, Base
+
 from api.DTO.advances_DTO import Advance
 from api.DTO.comments_DTO import Comment
-from api.DTO.common_DTO import users_units_association_table, Base
 from api.DTO.expenses_DTO import Expense
 from api.DTO.funding_sources_DTO import FundingSource
 from api.DTO.pools_DTO import Pool

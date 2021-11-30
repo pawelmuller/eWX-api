@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship
-from sqlalchemy import ForeignKey, Column, Integer, String
+from sqlalchemy import ForeignKey, Column, Integer
 from api.DTO import *
 
 

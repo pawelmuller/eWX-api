@@ -10,7 +10,7 @@ class Proposal(Base):
         self.user_id = user_id
         self.reason = reason
         self.description = description
-        self.status_id = 1  # ZŁOŻONY
+        self.status_id = 1
 
     # Attributes
     proposal_id = Column(Integer, primary_key=True)

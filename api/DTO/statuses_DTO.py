@@ -11,9 +11,9 @@ class Status(Base):
     name = Column(String)
     description = Column(String)
 
-    # Affiliations
-    proposal = relationship("Proposal", back_populates="status", foreign_keys=[Proposal.status_id])
+    # Relations
     status_history = relationship("StatusHistory", back_populates="status", foreign_keys=[StatusHistory.status_id])
+    proposal = relationship("Proposal", back_populates="status", foreign_keys=[Proposal.status_id])
 
     def __repr__(self):
         return f"<Status id={self.status_id}, name={self.name}, description={self.description}>"

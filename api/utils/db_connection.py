@@ -1,15 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from api.DTO.advances_DTO import Advance
-from api.DTO.comments_DTO import Comment
-from api.DTO.expenses_DTO import Expense
-from api.DTO.funding_sources_DTO import FundingSource
-from api.DTO.proposals_DTO import Proposal
-from api.DTO.statuses_DTO import Status
-from api.DTO.units_DTO import Unit
-from api.DTO.users_DTO import User
-
+from api.DTO import *
 from database_secrets import DB_VPN_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
 
 

@@ -11,7 +11,7 @@ class Advance(Base):
     proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"), primary_key=True)
     amount = Column(Integer)
 
-    # Affiliations
+    # Relations
     user = relationship("User", back_populates="advances", foreign_keys=[recipient_id])
     proposal = relationship("Proposal", back_populates="advances", foreign_keys=[proposal_id])
 

@@ -15,7 +15,7 @@ class Comment(Base):
     user_id = Column(Integer, ForeignKey("users.user_id"))
     proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"))
 
-    # Affiliations
+    # Relations
     user = relationship("User", back_populates="comments", foreign_keys=[user_id])
     proposal = relationship("Proposal", back_populates="comments", foreign_keys=[proposal_id])
 

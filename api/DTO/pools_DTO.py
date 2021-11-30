@@ -11,7 +11,7 @@ class Pool(Base):
     unit_id = Column(Integer, ForeignKey("units.unit_id"), primary_key=True)
     budget = Column(Integer)
 
-    # Affiliations
+    # Relations
     unit = relationship("Unit", back_populates="pools", foreign_keys=[unit_id])
 
     def __repr__(self):

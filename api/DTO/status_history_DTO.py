@@ -17,4 +17,4 @@ class StatusHistory(Base):
     proposal = relationship("Proposal", foreign_keys=[proposal_id])
 
     def __repr__(self):
-        return f"<StatusHistory id={self.status_history_id}, time={self.time}, status={self.status}"
+        return f"<StatusHistory id={self.status_history_id}, time={self.time}, status={self.status}>"

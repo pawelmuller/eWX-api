@@ -22,8 +22,8 @@ class Unit(Base):
 
     # Affiliations
     users = relationship("User", secondary=users_units_association_table, back_populates="units")
-    funding_sources = relationship("FundingSource", back_populates="unit", foreign_keys="[FundingSource.unit_id]")
-    pools = relationship("Pool", back_populates="unit", foreign_keys="[Pool.unit_id]")
+    funding_sources = relationship("FundingSource", back_populates="unit", foreign_keys=[FundingSource.unit_id])
+    pools = relationship("Pool", back_populates="unit", foreign_keys=[Pool.unit_id])
 
     def __repr__(self):
         return f"<Unit id={self.unit_id}, type={self.type}, name={self.name}>"

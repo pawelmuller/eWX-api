@@ -28,4 +28,3 @@ if __name__ == '__main__':
     # users = session.execute("SELECT * FROM users")  # Normal SQL query (not recommended)
     # for user in users:
     #     print(f"{user[1]} {user[2]}")
-

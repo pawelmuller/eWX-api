@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Column, Integer, String
-from api.DTO.common_DTO import Base
+from api.DTO import *
 
 
 class Expense(Base):
@@ -18,3 +18,6 @@ class Expense(Base):
 
     # Relations
     proposal = relationship("Proposal", back_populates="expenses", foreign_keys=[proposal_id])
+
+    def __repr__(self):
+        return f"<Expense id={self.expense_id}, name={self.name}, type={self.type}, price={self.quantity}x{self.price}>"

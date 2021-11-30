@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
-from api.DTO.common_DTO import Base, users_units_association_table
+from api.DTO import *
 
 
 class User(Base):
@@ -20,3 +20,8 @@ class User(Base):
     proposals = relationship("Proposal", back_populates="user", foreign_keys="[Proposal.user_id]")
     advances = relationship("Advance", back_populates="user", foreign_keys="[Advance.recipient_id]")
     comments = relationship("Comment", back_populates="user", foreign_keys="[Comment.user_id]")
+
+    def __repr__(self):
+        return f"<User id={self.user_id}," \
+               f"name={self.name}," \
+               f"surname={self.surname}>"

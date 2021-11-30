@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Column, Integer, String, TIMESTAMP
-from api.DTO.common_DTO import Base
+from api.DTO import *
 
 
 class Comment(Base):
@@ -18,3 +18,6 @@ class Comment(Base):
     # Affiliations
     user = relationship("User", back_populates="comments", foreign_keys=[user_id])
     proposal = relationship("Proposal", back_populates="comments", foreign_keys=[proposal_id])
+
+    def __repr__(self):
+        return f"<Comment id={self.comment_id}, time={self.time}, content={self.content}>"

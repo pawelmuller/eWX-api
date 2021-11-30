@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Column, Integer, String
-from api.DTO.common_DTO import Base
+from api.DTO import *
 
 
 class FundingSource(Base):
@@ -12,6 +12,11 @@ class FundingSource(Base):
 
     # Foreign keys
     unit_id = Column(Integer, ForeignKey("units.unit_id"))
+    proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"))
 
     # Relations
-    units = relationship("Unit", back_populates="funding_sources", foreign_keys=[unit_id])
+    unit = relationship("Unit", back_populates="funding_sources", foreign_keys=[unit_id])
+    proposal = relationship("Proposal", back_populates="funding_sources", foreign_keys=[proposal_id])
+
+    def __repr__(self):
+        return f"<FundingSource id={self.funding_source_id}, amount={self.amount}>"

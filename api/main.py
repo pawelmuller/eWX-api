@@ -1,9 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
-from api.routers import proposal
+from api.routers import proposal, unit
 
 app = FastAPI()
 app.include_router(proposal.router, prefix="/proposal", tags=["proposals"])
+app.include_router(unit.router, prefix="/unit", tags=["units"])
 
 
 @app.get("/")

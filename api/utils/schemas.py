@@ -49,3 +49,11 @@ class CreateProposalRequestModel(BaseModel):
     funding_sources: Optional[list[FundingSourcesModel]] \
         = Field([], title="Proposal advances",
                 description="A list of funding sources described with dictionaries as an FundingSourcesModel")
+
+
+class CreateUnitRequestModel(BaseModel):
+    type: str
+    name: str
+    description: str
+    chairperson_id: Optional[int]
+    treasurer_id: Optional[int]

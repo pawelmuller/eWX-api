@@ -11,16 +11,20 @@ class ExpenseModel(BaseModel):
     type: str \
         = Field(..., title="Expense type",
                 max_length=100)
-    price: str \
-        = Field(..., title="Expense price")
-    quantity: float \
-        = Field(..., title="Expense quantity")
+    price: int \
+        = Field(..., title="Expense price",
+                description="How much money does the expense cost. "
+                            "Warning: Use 1/1000000 of the usual price, e.g. for 1,50 -> type 1500000")
+    quantity: int \
+        = Field(..., title="Expense quantity.",
+                description="Warning: Use 1/1000 of the usual quantity, e.g. for 1,50 -> type 1500")
 
 
 class AdvanceModel(BaseModel):
-    amount: str \
+    amount: int \
         = Field(..., title="Advance amount",
-                description="How much money will be requested for advance")
+                description="How much money will be requested for advance. "
+                            "Warning: Use 1/1000000 of the usual amount, e.g. for 1,50 -> type 1500000")
     user_id: int \
         = Field(..., title="Advance recipient",
                 description="ID of user, that will receive the advance")
@@ -30,9 +34,10 @@ class FundingSourcesModel(BaseModel):
     funding_source_id: int \
         = Field(..., title="Funding source id",
                 description="An ID of the funding source that will be requested to cover the expenses")
-    amount: str \
+    amount: int \
         = Field(..., title="Amount",
-                description="How much money will be requested from a funding source")
+                description="How much money will be requested from a funding source. "
+                            "Warning: Use 1/1000000 of the usual amount, e.g. for 1,50 -> type 1500000")
 
 
 class CreateProposalRequestModel(BaseModel):

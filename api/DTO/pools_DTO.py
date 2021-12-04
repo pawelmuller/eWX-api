@@ -6,13 +6,23 @@ from api.DTO import *
 class Pool(Base):
     __tablename__ = "pools"
 
+    def __init__(self, pool_id: int, year: int, budget: int, unit_id: int):
+        self.pool_id = pool_id
+        self.year = year
+        self.budget = budget
+        self.unit_id = unit_id
+
     # Attributes
-    year = Column(Integer, primary_key=True)
-    unit_id = Column(Integer, ForeignKey("units.unit_id"), primary_key=True)
+    pool_id = Column(Integer, primary_key=True)
+    year = Column(Integer)
     budget = Column(Integer)
+
+    # Foreign keys
+    unit_id = Column(Integer, ForeignKey("units.unit_id"), primary_key=True)
 
     # Relations
     unit = relationship("Unit", back_populates="pools", foreign_keys=[unit_id])
+    funding_sources = relationship("FundingSource", back_populates="pools", foreign_keys=[FundingSource.pool_id])
 
     def __repr__(self):
-        return f"<Pool year={self.year}, budget={self.budget}, unit={self.unit}>"
+        return f"<Pool id={self.pool_id}, year={self.year}, budget={self.budget}, unit={self.unit}>"

@@ -6,16 +6,20 @@ from api.DTO import *
 class FundingSource(Base):
     __tablename__ = "funding_sources"
 
+    def __init__(self, proposal_id, pool_id, amount):
+        self.proposal_id = proposal_id
+        self.pool_id = pool_id
+        self.amount = amount
+
     # Attributes
-    funding_source_id = Column(Integer, primary_key=True)
     amount = Column(Integer)
 
     # Foreign keys
-    unit_id = Column(Integer, ForeignKey("units.unit_id"))
-    proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"))
+    pool_id = Column(Integer, ForeignKey("pools.pool_id"), primary_key=True)
+    proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"), primary_key=True)
 
     # Relations
-    unit = relationship("Unit", back_populates="funding_sources", foreign_keys=[unit_id])
+    pools = relationship("Pool", back_populates="funding_sources", foreign_keys=[pool_id])
     proposal = relationship("Proposal", back_populates="funding_sources", foreign_keys=[proposal_id])
 
     def __repr__(self):

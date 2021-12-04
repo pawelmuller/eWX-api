@@ -1,3 +1,5 @@
+from enum import Enum
+
 from pydantic import Field, BaseModel
 from typing import Optional
 
@@ -51,13 +53,33 @@ class CreateProposalRequestModel(BaseModel):
                 description="A list of funding sources described with dictionaries as an FundingSourcesModel")
 
 
+class UnitType(str, Enum):
+    WRS = "WRS"
+    RM = "RM"
+    ORG = "ORG"
+    KOM = "KOM"
+    INNY = "INNY"
+
+
 class CreateUnitRequestModel(BaseModel):
-    type: str
-    name: str
-    description: str
-    chairperson_id: Optional[int]
-    treasurer_id: Optional[int]
+    type: UnitType \
+        = Field(..., title="Unit type",
+                description="Unit type chosen from UnitType enumeration")
+    name: str \
+        = Field(..., title="Unit name",
+                max_length=1000)
+    description: Optional[str] \
+        = Field("", title="Unit description",
+                max_length=10000)
+    chairperson_id: Optional[int] \
+        = Field(..., title="Chairperson id",
+                description="An ID of the user that will be assigned as a chairperson to the requested unit")
+    treasurer_id: Optional[int] \
+        = Field(..., title="Treasurer id",
+                description="An ID of the user that will be assigned as a treasurer to the requested unit")
 
 
 class CreateProposalCommentRequestModel(BaseModel):
-    content: str
+    content: str \
+        = Field(..., title="Comment",
+                max_length=10000)

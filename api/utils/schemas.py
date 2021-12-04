@@ -57,3 +57,7 @@ class CreateUnitRequestModel(BaseModel):
     description: str
     chairperson_id: Optional[int]
     treasurer_id: Optional[int]
+
+
+class CreateProposalCommentRequestModel(BaseModel):
+    content: str

@@ -1,13 +1,19 @@
 from fastapi import APIRouter, status, Response
 from api.utils.schemas import CreateUnitRequestModel
+from api import CRUD
 
 router = APIRouter()
 
 
 @router.get("/")
 def get_units(response: Response):
-    response.status_code = status.HTTP_404_NOT_FOUND
-    return {"message": "Not implemented yet."}
+    units = CRUD.units.get_units()
+    if units:
+        response.status_code = status.HTTP_200_OK
+        return {"units": units}
+    else:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return
 
 
 @router.get("/{unit_id}")

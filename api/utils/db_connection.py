@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
-from database_secrets import DB_VPN_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
+from api.utils.database_secrets import DB_VPN_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
 from api.DTO import *
 
 
@@ -28,8 +28,8 @@ def get_history_of_proposal(proposal_id):
         return history
 
 
-def create_proposal(user: User, reason: str, description=None):
-    return Proposal(user.user_id, reason, description)
+# def create_proposal(user: User, reason: str, description=None):
+#     return Proposal(None, user.user_id, reason, description)
 
 
 def push_proposal_to_database(proposal: Proposal):
@@ -42,6 +42,6 @@ def push_proposal_to_database(proposal: Proposal):
 
 if __name__ == '__main__':
     user = get_users()[0]
-    proposal = create_proposal(user, "Powod")
+    # proposal = create_proposal(user, "Powod")
     print(proposal)
     push_proposal_to_database(proposal)

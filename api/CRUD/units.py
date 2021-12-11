@@ -10,6 +10,12 @@ def get_units() -> list:
     return units
 
 
+def get_unit(unit_id: int) -> Unit:
+    with db_connect() as session:
+        unit = session.query(Unit).where(Unit.unit_id == unit_id).first()
+    return unit
+
+
 def create_unit(unit_type: str,
                 name: str,
                 description: str,

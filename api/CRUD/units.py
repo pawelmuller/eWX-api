@@ -1,4 +1,6 @@
 from api.utils.db_connection import db_connect
+from sqlalchemy import func
+from sqlalchemy.exc import SQLAlchemyError
 from api.DTO import *
 
 
@@ -8,5 +10,22 @@ def get_units() -> list:
     return units
 
 
-def create_unit():
-    pass
+def create_unit(unit_type: str,
+                name: str,
+                description: str,
+                chairperson_id: int,
+                treasurer_id: int) -> (int, str):
+    with db_connect() as session:
+        new_id = session.query(func.max(Unit.unit_id)).scalar() + 1
+        new_unit = Unit(unit_id=new_id,
+                        type=unit_type,
+                        name=name,
+                        description=description,
+                        chairperson_id=chairperson_id,
+                        treasurer_id=treasurer_id)
+        session.add(new_unit)
+        try:
+            session.commit()
+        except SQLAlchemyError as error:
+            return None, str(error.__dict__['orig'])
+    return new_id, None

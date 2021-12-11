@@ -23,6 +23,15 @@ def get_unit(unit_id: int, response: Response):
 
 
 @router.post("/")
-def create_unit(request: CreateUnitRequestModel, response: Response):
-    response.status_code = status.HTTP_404_NOT_FOUND
-    return {"message": "Not implemented yet."}
+def create_unit(r: CreateUnitRequestModel, response: Response):
+    new_unit_id, error_message = CRUD.units.create_unit(unit_type=r.type,
+                                                        name=r.name,
+                                                        description=r.description,
+                                                        chairperson_id=r.chairperson_id,
+                                                        treasurer_id=r.treasurer_id)
+    if new_unit_id:
+        response.status_code = status.HTTP_201_CREATED
+        return {"id": new_unit_id}
+    else:
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {"error_message": error_message}

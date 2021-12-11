@@ -40,3 +40,18 @@ def create_unit(r: CreateUnitRequestModel, response: Response):
     else:
         response.status_code = status.HTTP_400_BAD_REQUEST
         return {"error_message": error_message}
+
+
+@router.put("/{unit_id}")
+def modify_unit(unit_id: int, r: CreateUnitRequestModel, response: Response):
+    is_successful, error_message = CRUD.units.modify_unit(unit_id=unit_id,
+                                                          unit_type=r.type,
+                                                          name=r.name,
+                                                          description=r.description,
+                                                          chairperson_id=r.chairperson_id,
+                                                          treasurer_id=r.treasurer_id)
+    if is_successful:
+        response.status_code = status.HTTP_200_OK
+    else:
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {"error_message": error_message}

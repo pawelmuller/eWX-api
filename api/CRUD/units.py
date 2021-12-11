@@ -35,3 +35,23 @@ def create_unit(unit_type: str,
         except SQLAlchemyError as error:
             return None, str(error.__dict__['orig'])
     return new_id, None
+
+
+def modify_unit(unit_id: int,
+                unit_type: str,
+                name: str,
+                description: str,
+                chairperson_id: int,
+                treasurer_id: int) -> (bool, str):
+    with db_connect() as session:
+        unit = session.query(Unit).where(Unit.unit_id == unit_id).first()
+        unit.type = unit_type
+        unit.name = name
+        unit.description = description
+        unit.chairperson_id = chairperson_id
+        unit.treasurer_id = treasurer_id
+        try:
+            session.commit()
+        except SQLAlchemyError as error:
+            return False, str(error.__dict__['orig'])
+    return True, None

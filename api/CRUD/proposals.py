@@ -12,8 +12,8 @@ def get_proposals() -> list:
 
 def get_proposal(proposal_id: int) -> Proposal:
     with db_connect() as session:
-        unit = session.query(Proposal).where(Proposal.proposal_id == proposal_id).first()
-    return unit
+        proposal = session.query(Proposal).where(Proposal.proposal_id == proposal_id).first()
+    return proposal
 
 
 def create_proposal(user_id: int,

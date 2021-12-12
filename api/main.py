@@ -3,7 +3,7 @@ import sys
 import uvicorn
 from fastapi import FastAPI
 from api.routers import proposal, unit
-from api.utils.db_connection import db_connect
+from api.utils.db_connection import create_db_engine
 
 app = FastAPI()
 app.include_router(proposal.router, prefix="/proposal", tags=["proposals"])
@@ -22,10 +22,7 @@ async def test():
 
 @app.on_event("startup")
 async def startup_event():
-    if len(sys.argv) > 1:
-        db_connect(sys.argv[1])
-    else:
-        db_connect()
+    create_db_engine(test=False)
 
 
 if __name__ == "__main__":

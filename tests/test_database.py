@@ -1,8 +1,10 @@
 from api.CRUD.units import create_unit, get_unit, modify_unit
+from api.utils.db_connection import create_db_engine
 
 
 class TestUnits:
     def test_add_unit_good(self):
+        create_db_engine(test=True)
         unit_id, error_message = create_unit(unit_type='WRS',
                                              name='Test',
                                              description='Description',
@@ -16,6 +18,7 @@ class TestUnits:
         assert unit.treasurer_id == 1
 
     def test_modify_unit(self):
+        create_db_engine(test=True)
         unit_id, error_message = create_unit(unit_type='WRS',
                                              name='Test',
                                              description='Description',

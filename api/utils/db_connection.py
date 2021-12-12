@@ -3,24 +3,26 @@ from sqlalchemy.orm import sessionmaker
 from api.utils.database_secrets import DB_VPN_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
 
 active_session = None
+engine = None
 
 
 def get_session():
+    global active_session
+    global engine
+
     if active_session is None:
-        db_connect()
+        Session = sessionmaker(engine)
+        active_session = Session()
     return active_session
 
 
-def db_connect(test=False):
-    global active_session
+def create_db_engine(test: bool):
+    global engine
 
     if test:
         engine = create_engine('sqlite:///..//tests//test.db', echo=False)
     else:
         engine = create_engine(f"postgresql://{DB_LOGIN}:{DB_PASSWORD}@{DB_VPN_URL}/{DB_NAME}", echo=False)
-
-    Session = sessionmaker(engine)
-    active_session = Session()
 
 
 def get_next_id(session, field):

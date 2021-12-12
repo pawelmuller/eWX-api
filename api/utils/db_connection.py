@@ -20,7 +20,7 @@ def create_db_engine(test: bool):
     global engine
 
     if test:
-        engine = create_engine('sqlite:///..//tests//test.db', echo=False)
+        engine = create_engine('sqlite:///tests//test.db', echo=False)
     else:
         engine = create_engine(f"postgresql://{DB_LOGIN}:{DB_PASSWORD}@{DB_VPN_URL}/{DB_NAME}", echo=False)
 

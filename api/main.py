@@ -1,6 +1,9 @@
+import sys
+
 import uvicorn
 from fastapi import FastAPI
 from api.routers import proposal, unit
+from api.utils.db_connection import db_connect
 
 app = FastAPI()
 app.include_router(proposal.router, prefix="/proposal", tags=["proposals"])
@@ -15,6 +18,14 @@ async def root():
 @app.get("/test")
 async def test():
     return {"message": "test"}
+
+
+@app.on_event("startup")
+async def startup_event():
+    if len(sys.argv) > 1:
+        db_connect(sys.argv[1])
+    else:
+        db_connect()
 
 
 if __name__ == "__main__":

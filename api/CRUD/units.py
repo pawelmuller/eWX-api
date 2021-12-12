@@ -1,17 +1,17 @@
-from api.utils.db_connection import db_connect
+from api.utils.db_connection import get_session
 from sqlalchemy import func
 from api.DTO import *
 from api.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 
 def get_units() -> list:
-    with db_connect() as session:
+    with get_session() as session:
         units = session.query(Unit).all()
     return units
 
 
 def get_unit(unit_id: int) -> Unit:
-    with db_connect() as session:
+    with get_session() as session:
         unit = session.query(Unit).where(Unit.unit_id == unit_id).first()
     return unit
 
@@ -22,7 +22,7 @@ def create_unit(unit_type: str,
                 description: str,
                 chairperson_id: int,
                 treasurer_id: int) -> (int, str):
-    with db_connect() as session:
+    with get_session() as session:
         new_id = session.query(func.max(Unit.unit_id)).scalar() + 1
         new_unit = Unit(unit_id=new_id,
                         type=unit_type,
@@ -42,7 +42,7 @@ def modify_unit(unit_id: int,
                 description: str,
                 chairperson_id: int,
                 treasurer_id: int) -> (bool, str):
-    with db_connect() as session:
+    with get_session() as session:
         unit = session.query(Unit).where(Unit.unit_id == unit_id).first()
         unit.type = unit_type
         unit.name = name

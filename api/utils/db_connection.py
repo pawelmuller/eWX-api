@@ -10,6 +10,15 @@ def db_connect():
     return Session()
 
 
+def get_next_id(session, field):
+    new_id = session.query(func.max(field)).scalar()
+    if new_id is None:
+        new_id = 1
+    else:
+        new_id += 1
+    return new_id
+
+
 def get_users():
     with db_connect() as session:
         users = session.query(User)

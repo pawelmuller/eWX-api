@@ -38,6 +38,17 @@ def create_proposal(r: CreateProposalRequestModel, response: Response):
                                                                          price=expense.price,
                                                                          expense_type=expense.type,
                                                                          proposal_id=new_proposal_id)
+            if new_expense_id is None:
+                response.status_code = status.HTTP_400_BAD_REQUEST
+                return {"error_message": error_message}
+
+        for advance in r.advances:
+            is_successful, error_message = CRUD.advances.create_advance(user_id=1,
+                                                                        proposal_id=new_proposal_id,
+                                                                        amount=advance.amount)
+            if is_successful is False:
+                response.status_code = status.HTTP_400_BAD_REQUEST
+                return {"error_message": error_message}
         response.status_code = status.HTTP_201_CREATED
         return {"id": new_proposal_id}
 

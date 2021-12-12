@@ -1,4 +1,4 @@
-from api.utils.db_connection import db_connect
+from api.utils.db_connection import db_connect, get_next_id
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from api.DTO import *
@@ -21,7 +21,7 @@ def create_proposal(user_id: int,
                     description: str,
                     status_id: int) -> (int, str):
     with db_connect() as session:
-        new_id = session.query(func.max(Proposal.proposal_id)).scalar() + 1
+        new_id = get_next_id(session, Proposal.proposal_id)
         new_proposal = Proposal(proposal_id=new_id,
                                 user_id=user_id,
                                 name=name,

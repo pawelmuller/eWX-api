@@ -1,4 +1,4 @@
-from api.utils.db_connection import db_connect
+from api.utils.db_connection import db_connect, get_next_id
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from api.DTO import *
@@ -22,7 +22,7 @@ def create_expense(name: str,
                    expense_type: str,
                    proposal_id: int) -> (int, str):
     with db_connect() as session:
-        new_id = session.query(func.max(Expense.expense_id)).scalar() + 1
+        new_id = get_next_id(session, Expense.expense_id)
         new_expense = Expense(expense_id=new_id,
                               name=name,
                               quantity=quantity,
@@ -35,3 +35,4 @@ def create_expense(name: str,
         except SQLAlchemyError as error:
             return None, str(error.__dict__['orig'])
     return new_id, None
+

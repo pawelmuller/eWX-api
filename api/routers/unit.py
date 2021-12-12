@@ -16,10 +16,10 @@ def get_units(response: Response):
 
 @router.get("/{unit_id}")
 def get_unit(unit_id: int, response: Response):
-    units = CRUD.units.get_unit(unit_id)
-    if units:
+    unit = CRUD.units.get_unit(unit_id)
+    if unit:
         response.status_code = status.HTTP_200_OK
-        return units
+        return unit
     response.status_code = status.HTTP_404_NOT_FOUND
 
 

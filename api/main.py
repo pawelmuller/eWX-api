@@ -26,7 +26,9 @@ async def startup_event():
 
 origins = [
     "http://localhost:3000",
-    "localhost:3000"
+    "localhost:3000",
+    "http://ew4.ddns.net:3000",
+    "ew4.ddns.net:3000"
 ]
 
 app.add_middleware(

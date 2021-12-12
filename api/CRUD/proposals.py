@@ -1,7 +1,6 @@
 from api.utils.db_connection import db_connect, get_next_id
-from sqlalchemy import func
-from sqlalchemy.exc import SQLAlchemyError
 from api.DTO import *
+from api.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 
 def get_proposals() -> list:
@@ -16,6 +15,7 @@ def get_proposal(proposal_id: int) -> Proposal:
     return proposal
 
 
+@catch_db_exceptions
 def create_proposal(user_id: int,
                     name: str,
                     description: str,
@@ -28,8 +28,5 @@ def create_proposal(user_id: int,
                                 description=description,
                                 status_id=status_id)
         session.add(new_proposal)
-        try:
-            session.commit()
-        except SQLAlchemyError as error:
-            return None, str(error.__dict__['orig'])
+        session.commit()
     return new_id, None

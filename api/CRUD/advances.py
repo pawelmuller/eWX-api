@@ -1,7 +1,6 @@
-from api.utils.db_connection import db_connect, get_next_id
-from sqlalchemy import func
-from sqlalchemy.exc import SQLAlchemyError
+from api.utils.db_connection import db_connect
 from api.DTO import *
+from api.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 
 def get_advances() -> list:
@@ -16,6 +15,7 @@ def get_advance(advance_id: int) -> Advance:
     return advance
 
 
+@catch_db_exceptions
 def create_advance(user_id: int,
                    proposal_id: int,
                    amount: int) -> (bool, str):
@@ -24,8 +24,5 @@ def create_advance(user_id: int,
                               proposal_id=proposal_id,
                               amount=amount)
         session.add(new_advance)
-        try:
-            session.commit()
-        except SQLAlchemyError as error:
-            return False, str(error.__dict__['orig'])
+        session.commit()
     return True, None

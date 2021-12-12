@@ -11,8 +11,7 @@ def get_proposals(response: Response):
     if proposals:
         response.status_code = status.HTTP_200_OK
         return {"proposals": proposals}
-    else:
-        response.status_code = status.HTTP_404_NOT_FOUND
+    response.status_code = status.HTTP_404_NOT_FOUND
 
 
 @router.get("/{proposal_id}")
@@ -21,8 +20,7 @@ def get_proposal(proposal_id: int, response: Response):
     if proposal:
         response.status_code = status.HTTP_200_OK
         return proposal
-    else:
-        response.status_code = status.HTTP_404_NOT_FOUND
+    response.status_code = status.HTTP_404_NOT_FOUND
 
 
 @router.post("/")

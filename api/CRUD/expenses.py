@@ -1,7 +1,6 @@
 from api.utils.db_connection import db_connect, get_next_id
-from sqlalchemy import func
-from sqlalchemy.exc import SQLAlchemyError
 from api.DTO import *
+from api.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 
 def get_expenses() -> list:
@@ -16,6 +15,7 @@ def get_expense(expense_id: int) -> Expense:
     return expense
 
 
+@catch_db_exceptions
 def create_expense(name: str,
                    quantity: int,
                    price: int,
@@ -30,9 +30,6 @@ def create_expense(name: str,
                               type=expense_type,
                               proposal_id=proposal_id)
         session.add(new_expense)
-        try:
-            session.commit()
-        except SQLAlchemyError as error:
-            return None, str(error.__dict__['orig'])
+        session.commit()
     return new_id, None
 

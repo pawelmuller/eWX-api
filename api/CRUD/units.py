@@ -1,7 +1,7 @@
 from api.utils.db_connection import db_connect
 from sqlalchemy import func
-from sqlalchemy.exc import SQLAlchemyError
 from api.DTO import *
+from api.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 
 def get_units() -> list:
@@ -16,6 +16,7 @@ def get_unit(unit_id: int) -> Unit:
     return unit
 
 
+@catch_db_exceptions
 def create_unit(unit_type: str,
                 name: str,
                 description: str,
@@ -30,13 +31,11 @@ def create_unit(unit_type: str,
                         chairperson_id=chairperson_id,
                         treasurer_id=treasurer_id)
         session.add(new_unit)
-        try:
-            session.commit()
-        except SQLAlchemyError as error:
-            return None, str(error.__dict__['orig'])
+        session.commit()
     return new_id, None
 
 
+@catch_db_exceptions
 def modify_unit(unit_id: int,
                 unit_type: str,
                 name: str,
@@ -50,8 +49,5 @@ def modify_unit(unit_id: int,
         unit.description = description
         unit.chairperson_id = chairperson_id
         unit.treasurer_id = treasurer_id
-        try:
-            session.commit()
-        except SQLAlchemyError as error:
-            return False, str(error.__dict__['orig'])
+        session.commit()
     return True, None

@@ -1,12 +1,12 @@
 from fastapi import APIRouter, status, Response
 from api.utils.schemas import CreateProposalRequestModel, CreateProposalCommentRequestModel
 from api import CRUD
+
 router = APIRouter()
 
 
 @router.get("/")
 def get_proposals(response: Response):
-
     proposals = CRUD.proposals.get_proposals()
     if proposals:
         response.status_code = status.HTTP_200_OK
@@ -32,6 +32,12 @@ def create_proposal(r: CreateProposalRequestModel, response: Response):
                                                                     description=r.description,
                                                                     status_id=1)
     if new_proposal_id:
+        for expense in r.expenses:
+            new_expense_id, error_message = CRUD.expenses.create_expense(name=expense.name,
+                                                                         quantity=expense.quantity,
+                                                                         price=expense.price,
+                                                                         expense_type=expense.type,
+                                                                         proposal_id=new_proposal_id)
         response.status_code = status.HTTP_201_CREATED
         return {"id": new_proposal_id}
 

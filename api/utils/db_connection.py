@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
-from database_secrets import DB_VPN_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
+from api.utils.database_secrets import DB_VPN_URL, DB_LOGIN, DB_PASSWORD, DB_NAME
 from api.DTO import *
 
 

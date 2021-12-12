@@ -33,9 +33,8 @@ def create_unit(r: CreateUnitRequestModel, response: Response):
     if new_unit_id:
         response.status_code = status.HTTP_201_CREATED
         return {"id": new_unit_id}
-    else:
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return {"error_message": error_message}
+    response.status_code = status.HTTP_400_BAD_REQUEST
+    return {"error_message": error_message}
 
 
 @router.put("/{unit_id}")

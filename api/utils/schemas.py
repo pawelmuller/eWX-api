@@ -76,11 +76,11 @@ class CreateUnitRequestModel(BaseModel):
     description: Optional[str] \
         = Field("", title="Unit description",
                 max_length=10000)
-    chairperson_id: Optional[int] \
+    chairperson_id: int \
         = Field(..., title="Chairperson id",
                 description="An ID of the user that will be assigned as a chairperson to the requested unit")
     treasurer_id: Optional[int] \
-        = Field(..., title="Treasurer id",
+        = Field(None, title="Treasurer id",
                 description="An ID of the user that will be assigned as a treasurer to the requested unit")
 
 

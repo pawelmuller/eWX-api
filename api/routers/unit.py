@@ -11,9 +11,7 @@ def get_units(response: Response):
     if units:
         response.status_code = status.HTTP_200_OK
         return {"units": units}
-    else:
-        response.status_code = status.HTTP_404_NOT_FOUND
-        return
+    response.status_code = status.HTTP_404_NOT_FOUND
 
 
 @router.get("/{unit_id}")
@@ -22,9 +20,7 @@ def get_unit(unit_id: int, response: Response):
     if units:
         response.status_code = status.HTTP_200_OK
         return units
-    else:
-        response.status_code = status.HTTP_404_NOT_FOUND
-        return
+    response.status_code = status.HTTP_404_NOT_FOUND
 
 
 @router.post("/")

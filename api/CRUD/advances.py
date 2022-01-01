@@ -15,14 +15,12 @@ def get_advance(advance_id: int) -> Advance:
     return advance
 
 
-@catch_db_exceptions
-def create_advance(user_id: int,
+def create_advance(session,
+                   user_id: int,
                    proposal_id: int,
-                   amount: int) -> (bool, str):
-    with db_connect() as session:
-        new_advance = Advance(recipient_id=user_id,
-                              proposal_id=proposal_id,
-                              amount=amount)
-        session.add(new_advance)
-        session.commit()
-    return True, None
+                   amount: int) -> None:
+    new_advance = Advance(recipient_id=user_id,
+                          proposal_id=proposal_id,
+                          amount=amount)
+    session.add(new_advance)
+    return

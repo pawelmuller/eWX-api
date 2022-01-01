@@ -1,6 +1,8 @@
 from fastapi import APIRouter, status, Response
 from api.utils.schemas import CreateProposalRequestModel, CreateProposalCommentRequestModel
 from api import CRUD
+from utils.db_connection import db_connect
+from utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 router = APIRouter()
 
@@ -24,34 +26,30 @@ def get_proposal(proposal_id: int, response: Response):
 
 
 @router.post("/")
+@catch_db_exceptions
 def create_proposal(r: CreateProposalRequestModel, response: Response):
-    new_proposal_id, error_message = CRUD.proposals.create_proposal(user_id=1,
-                                                                    name=r.name,
-                                                                    description=r.description,
-                                                                    status_id=1)
-    if new_proposal_id:
+    with db_connect() as session:
+        new_proposal_id = CRUD.proposals.create_proposal(session=session,
+                                                         user_id=1,
+                                                         name=r.name,
+                                                         description=r.description,
+                                                         status_id=1)
         for expense in r.expenses:
-            new_expense_id, error_message = CRUD.expenses.create_expense(name=expense.name,
-                                                                         quantity=expense.quantity,
-                                                                         price=expense.price,
-                                                                         expense_type=expense.type,
-                                                                         proposal_id=new_proposal_id)
-            if new_expense_id is None:
-                response.status_code = status.HTTP_400_BAD_REQUEST
-                return {"error_message": error_message}
+            new_expense_id = CRUD.expenses.create_expense(session=session,
+                                                          name=expense.name,
+                                                          quantity=expense.quantity,
+                                                          price=expense.price,
+                                                          expense_type=expense.type,
+                                                          proposal_id=new_proposal_id)
 
         for advance in r.advances:
-            is_successful, error_message = CRUD.advances.create_advance(user_id=1,
-                                                                        proposal_id=new_proposal_id,
-                                                                        amount=advance.amount)
-            if is_successful is False:
-                response.status_code = status.HTTP_400_BAD_REQUEST
-                return {"error_message": error_message}
-        response.status_code = status.HTTP_201_CREATED
-        return {"id": new_proposal_id}
-
-    response.status_code = status.HTTP_400_BAD_REQUEST
-    return {"error_message": error_message}
+            CRUD.advances.create_advance(session=session,
+                                         user_id=advance.user_id,
+                                         proposal_id=new_proposal_id,
+                                         amount=advance.amount)
+        session.commit()
+    response.status_code = status.HTTP_201_CREATED
+    return {"id": new_proposal_id}
 
 
 @router.get("/{proposal_id}/comments")

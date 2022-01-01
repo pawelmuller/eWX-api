@@ -15,18 +15,16 @@ def get_proposal(proposal_id: int) -> Proposal:
     return proposal
 
 
-@catch_db_exceptions
-def create_proposal(user_id: int,
+def create_proposal(session,
+                    user_id: int,
                     name: str,
                     description: str,
                     status_id: int) -> (int, str):
-    with db_connect() as session:
-        new_id = get_next_id(session, Proposal.proposal_id)
-        new_proposal = Proposal(proposal_id=new_id,
-                                user_id=user_id,
-                                name=name,
-                                description=description,
-                                status_id=status_id)
-        session.add(new_proposal)
-        session.commit()
-    return new_id, None
+    new_id = get_next_id(session, Proposal.proposal_id)
+    new_proposal = Proposal(proposal_id=new_id,
+                            user_id=user_id,
+                            name=name,
+                            description=description,
+                            status_id=status_id)
+    session.add(new_proposal)
+    return new_id

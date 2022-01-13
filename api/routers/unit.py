@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, Response
-from api.utils.schemas import CreateUnitRequestModel
+from api.utils.models import CreateUnitRequestModel
 from api import CRUD
 
 router = APIRouter()

@@ -1,11 +1,12 @@
 from fastapi import APIRouter, status, Response
-from api.utils.models import CreateUnitRequestModel
+from api.utils.models import CreateUnitRequestModel, UnitResponseModel, UnitsListResponseModel,\
+    CreateEntityResponseModel
 from api import CRUD
 
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=UnitsListResponseModel)
 def get_units(response: Response):
     units = CRUD.units.get_units()
     if units:
@@ -14,7 +15,7 @@ def get_units(response: Response):
     response.status_code = status.HTTP_404_NOT_FOUND
 
 
-@router.get("/{unit_id}")
+@router.get("/{unit_id}", response_model=UnitResponseModel)
 def get_unit(unit_id: int, response: Response):
     unit = CRUD.units.get_unit(unit_id)
     if unit:
@@ -23,7 +24,7 @@ def get_unit(unit_id: int, response: Response):
     response.status_code = status.HTTP_404_NOT_FOUND
 
 
-@router.post("/")
+@router.post("/", response_model=CreateEntityResponseModel)
 def create_unit(r: CreateUnitRequestModel, response: Response):
     new_unit_id, error_message = CRUD.units.create_unit(unit_type=r.type,
                                                         name=r.name,
@@ -46,4 +47,5 @@ def modify_unit(unit_id: int, r: CreateUnitRequestModel, response: Response):
                                                           treasurer_id=r.treasurer_id)
     if is_successful:
         response.status_code = status.HTTP_200_OK
+        return
     response.status_code = status.HTTP_400_BAD_REQUEST

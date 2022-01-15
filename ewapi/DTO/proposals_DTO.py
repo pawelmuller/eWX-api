@@ -6,15 +6,16 @@ from ewapi.DTO import *
 class Proposal(Base):
     __tablename__ = "proposals"
 
-    def __init__(self, user_id, reason, description):
+    def __init__(self, proposal_id, user_id, name, description, status_id):
+        self.proposal_id = proposal_id
         self.user_id = user_id
-        self.reason = reason
+        self.name = name
         self.description = description
-        self.status_id = 1
+        self.status_id = status_id
 
     # Attributes
     proposal_id = Column(Integer, primary_key=True)
-    reason = Column(String)
+    name = Column(String)
     description = Column(String)
 
     # Foreign keys
@@ -30,4 +31,4 @@ class Proposal(Base):
     user = relationship("User", back_populates="proposals", foreign_keys=[user_id])
 
     def __repr__(self):
-        return f"<Proposal id={self.proposal_id}, reason={self.reason}, desc={self.description}>"
+        return f"<Proposal id={self.proposal_id}, name={self.name}, desc={self.description}>"

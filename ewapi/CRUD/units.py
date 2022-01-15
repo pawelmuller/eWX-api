@@ -1,5 +1,4 @@
-from ewapi.utils.db_connection import get_session
-from sqlalchemy import func
+from ewapi.utils.db_connection import get_session, get_next_id
 from ewapi.DTO import *
 from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
@@ -23,7 +22,7 @@ def create_unit(unit_type: str,
                 chairperson_id: int,
                 treasurer_id: int) -> (int, str):
     with get_session() as session:
-        new_id = session.query(func.max(Unit.unit_id)).scalar() + 1
+        new_id = get_next_id(session, Unit.unit_id)
         new_unit = Unit(unit_id=new_id,
                         type=unit_type,
                         name=name,

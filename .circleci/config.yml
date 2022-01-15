@@ -12,9 +12,17 @@ jobs:
       - python/install-packages:
           pkg-manager: pip
       - run:
+          name: Prepare secrets
+          command: |
+            echo "DB_VPN_URL = \"0.0.0.0:0000\"" > ewapi/utils/database_secrets.py
+            echo "DB_NAME = \"eW4\"" >> ewapi/utils/database_secrets.py
+            echo "DB_LOGIN = \"not_relevant\"" >> ewapi/utils/database_secrets.py
+            echo "DB_PASSWORD = \"eW4\"" >> ewapi/utils/database_secrets.py
+      - run:
           name: Run tests
           command: |
-            python -m pytest .
+            ls
+            python -m pytest tests
 #      - run:
 #          name: Install jFrog CLI
 #          command: curl -fL https://getcli.jfrog.io | sh

@@ -1,7 +1,7 @@
 from pydantic import Field, BaseModel
 from typing import Optional
 
-from api.utils.models import AdvanceModel, ExpenseModel, FundingSourcesModel
+from ewapi.models import AdvanceModel, ExpenseModel, FundingSourcesModel
 
 
 class CreateProposalRequestModel(BaseModel):

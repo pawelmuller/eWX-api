@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Column, Integer
-from api.DTO import *
+from ewapi.DTO import *
 
 
 class FundingSource(Base):

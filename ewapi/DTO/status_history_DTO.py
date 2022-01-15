@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Column, Integer, TIMESTAMP
-from api.DTO import *
+from ewapi.DTO import *
 
 
 class StatusHistory(Base):

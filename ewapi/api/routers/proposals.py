@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, Response
-from api.utils.models import CreateProposalRequestModel, CreateProposalCommentRequestModel
+from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel
 
 router = APIRouter()
 

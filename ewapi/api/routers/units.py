@@ -1,7 +1,6 @@
 from fastapi import APIRouter, status, Response
-from api.utils.models import CreateUnitRequestModel, UnitResponseModel, UnitsListResponseModel,\
-    CreateEntityResponseModel
-from api import CRUD
+from ewapi.models import CreateUnitRequestModel, UnitResponseModel, UnitsListResponseModel, CreateEntityResponseModel
+from ewapi import CRUD
 
 router = APIRouter()
 

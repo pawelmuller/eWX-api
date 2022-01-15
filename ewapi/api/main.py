@@ -1,13 +1,13 @@
 import uvicorn
 from fastapi import FastAPI
-from api.routers import proposal, unit
-from api.utils.db_connection import create_db_engine
+from ewapi.api.routers import proposals, units
+from ewapi.utils.db_connection import create_db_engine
 from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
-app.include_router(proposal.router, prefix="/proposal", tags=["proposals"])
-app.include_router(unit.router, prefix="/unit", tags=["units"])
+app.include_router(proposals.router, prefix="/proposal", tags=["proposals"])
+app.include_router(units.router, prefix="/unit", tags=["units"])
 
 
 @app.get("/")

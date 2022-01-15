@@ -1,7 +1,7 @@
-from api.utils.db_connection import get_session
+from ewapi.utils.db_connection import get_session
 from sqlalchemy import func
-from api.DTO import *
-from api.utils.decorators.catch_db_exceptions import catch_db_exceptions
+from ewapi.DTO import *
+from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 
 def get_units() -> list:

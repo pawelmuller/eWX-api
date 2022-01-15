@@ -1,5 +1,5 @@
-from api.CRUD.units import create_unit, get_unit, modify_unit
-from api.utils.db_connection import create_db_engine
+from ewapi.CRUD.units import create_unit, get_unit, modify_unit
+from ewapi.utils.db_connection import create_db_engine
 
 
 class TestUnits:

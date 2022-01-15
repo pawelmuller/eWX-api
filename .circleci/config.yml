@@ -13,7 +13,10 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: python -m pytest
+          command: |
+            pwd
+            cd ..
+            python -m pytest
 #      - run:
 #          name: Install jFrog CLI
 #          command: curl -fL https://getcli.jfrog.io | sh

@@ -1,6 +1,5 @@
-import pytest
 from fastapi.testclient import TestClient
-import api.main as main
+import ewapi.api.main as main
 
 
 class TestUnits:

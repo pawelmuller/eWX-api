@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
-from api.DTO import *
+from ewapi.DTO import *
 
 
 class User(Base):

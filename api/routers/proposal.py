@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status, Response
 from api.utils.schemas import CreateProposalRequestModel, CreateProposalCommentRequestModel
 from api import CRUD
-from utils.db_connection import db_connect
-from utils.decorators.catch_db_exceptions import catch_db_exceptions
+from api.utils.db_connection import db_connect
+from api.utils.decorators.catch_db_exceptions import catch_db_exceptions
 
 router = APIRouter()
 

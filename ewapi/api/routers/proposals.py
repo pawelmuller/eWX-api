@@ -1,8 +1,9 @@
 from fastapi import APIRouter, status, Response
 from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel
 from ewapi import CRUD
-from ewapi.utils.db_connection import db_connect
 from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
+from ewapi.utils.db_connection import get_session
+
 
 router = APIRouter()
 
@@ -28,7 +29,7 @@ def get_proposal(proposal_id: int, response: Response):
 @router.post("/")
 @catch_db_exceptions
 def create_proposal(r: CreateProposalRequestModel, response: Response):
-    with db_connect() as session:
+    with get_session() as session:
         new_proposal_id = CRUD.proposals.create_proposal(session=session,
                                                          user_id=1,
                                                          name=r.name,

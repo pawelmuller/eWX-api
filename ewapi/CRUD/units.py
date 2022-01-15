@@ -1,5 +1,4 @@
-from ewapi.utils.db_connection import db_connect, get_next_id
-from sqlalchemy import func
+from ewapi.utils.db_connection import get_session, get_next_id
 from ewapi.DTO import *
 from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
 

@@ -12,6 +12,9 @@ jobs:
       - python/install-packages:
           pkg-manager: pip
       - run:
+          name: Install jFrog CLI
+          command: curl -fL https://getcli.jfrog.io | sh
+      - run:
           name: Prepare secrets
           command: |
             echo "DB_VPN_URL = \"0.0.0.0:0000\"" > ewapi/utils/database_secrets.py
@@ -20,20 +23,17 @@ jobs:
             echo "DB_PASSWORD = \"eW4\"" >> ewapi/utils/database_secrets.py
       - run:
           name: Run tests
+          command: python -m pytest tests
+      - run:
+          name: Build package
+          command: python -m build
+      - run:
+          name: Push to Artifatory
           command: |
-            ls
-            python -m pytest tests
-#      - run:
-#          name: Install jFrog CLI
-#          command: curl -fL https://getcli.jfrog.io | sh
-#      - run:
-#          name: Push to Artifatory
-#          command: |
-#            python -m build
-#            cd dist
-#            ../jfrog config add ew4-pypi --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_APIKEY --interactive=false
-#            ../jfrog rt u "*" ew4-pypi --build-name=Build --build-number=$CIRCLE_BUILD_NUM --flat=false
+            cd dist
+            ../jfrog config add ew4-pypi --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_APIKEY --interactive=false
+            ../jfrog rt u "*" ew4-pypi --build-name=Build --build-number=$CIRCLE_BUILD_NUM --flat=false
 workflows:
-  sample:
+  main:
     jobs:
       - build-and-test

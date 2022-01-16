@@ -61,7 +61,7 @@ class TestProposals:
                 new_expense_id_1 = CRUD.expenses.create_expense(session=session,
                                                                 name="EXPENSE",
                                                                 quantity="QUANTITY",
-                                                                price=-100,
+                                                                price=100,
                                                                 expense_type="TYPE",
                                                                 proposal_id=new_proposal_id)
                 session.commit()

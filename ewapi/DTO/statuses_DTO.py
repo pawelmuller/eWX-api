@@ -12,8 +12,8 @@ class Status(Base):
     description = Column(String)
 
     # Relations
-    status_history = relationship("StatusHistory", back_populates="status", foreign_keys=[StatusHistory.status_id])
-    proposal = relationship("Proposal", back_populates="status", foreign_keys=[Proposal.status_id])
+    status_history = relationship("StatusHistory", back_populates="status", foreign_keys=[StatusHistory.status_id], lazy='subquery')
+    proposal = relationship("Proposal", back_populates="status", foreign_keys=[Proposal.status_id], lazy='subquery')
 
     def __repr__(self):
         return f"<Status id={self.status_id}, name={self.name}, description={self.description}>"

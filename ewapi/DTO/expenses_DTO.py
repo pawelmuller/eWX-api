@@ -17,7 +17,7 @@ class Expense(Base):
     proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"))
 
     # Relations
-    proposal = relationship("Proposal", back_populates="expenses", foreign_keys=[proposal_id])
+    proposal = relationship("Proposal", back_populates="expenses", foreign_keys=[proposal_id], lazy='subquery')
 
     def __repr__(self):
         return f"<Expense id={self.expense_id}, name={self.name}, type={self.type}, price={self.quantity}x{self.price}>"

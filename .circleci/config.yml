@@ -5,45 +5,34 @@ orbs:
 
 jobs:
   build-and-test:
-
-    # Primary container image where all commands run
     docker:
-      - image: cimg/python:3.9.1
-        environment:
-          TEST_DATABASE_URL: postgresql://root@localhost/circle_test
-
-    # Service container image
-      - image: circleci/postgres:9.6.5-alpine-ram
-
+      - image: cimg/python:3.9.7
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
-          name: Install jFrog CLI
-          command: curl -fL https://getcli.jfrog.io | sh
-      - run:
-          name: Test database
+          name: Prepare secrets
           command: |
-            sudo apt-get update
-            sudo apt-get install postgresql-client
-            whoami
-            psql -d $TEST_DATABASE_URL -c "CREATE TABLE users (
-              user_id integer not null constraint users_pk primary key,
-              name    text    not null,
-              surname text    not null);"
+            echo "DB_VPN_URL = \"0.0.0.0:0000\"" > ewapi/utils/database_secrets.py
+            echo "DB_NAME = \"eW4\"" >> ewapi/utils/database_secrets.py
+            echo "DB_LOGIN = \"not_relevant\"" >> ewapi/utils/database_secrets.py
+            echo "DB_PASSWORD = \"eW4\"" >> ewapi/utils/database_secrets.py
       - run:
           name: Run tests
-          command: python -m unittest tests/test_hello_world.py
-      - run:
-          name: Make package
-          command: python -m build
-      - run:
-          name: Push to Artifatory
           command: |
-            cd dist
-            ../jfrog config add ew4-pypi --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_APIKEY --interactive=false
-            ../jfrog rt u "*" ew4-pypi --build-name=Build --build-number=$CIRCLE_BUILD_NUM --flat=false
+            ls
+            python -m pytest tests
+#      - run:
+#          name: Install jFrog CLI
+#          command: curl -fL https://getcli.jfrog.io | sh
+#      - run:
+#          name: Push to Artifatory
+#          command: |
+#            python -m build
+#            cd dist
+#            ../jfrog config add ew4-pypi --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_APIKEY --interactive=false
+#            ../jfrog rt u "*" ew4-pypi --build-name=Build --build-number=$CIRCLE_BUILD_NUM --flat=false
 workflows:
   sample:
     jobs:

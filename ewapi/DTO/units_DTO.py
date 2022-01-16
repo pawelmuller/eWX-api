@@ -17,12 +17,12 @@ class Unit(Base):
     treasurer_id = Column(Integer, ForeignKey("users.user_id"))
 
     # Relations
-    chairperson = relationship("User", back_populates="chairperson_positions", foreign_keys=[chairperson_id], lazy='subquery')
-    pools = relationship("Pool", back_populates="unit", foreign_keys=[Pool.unit_id], lazy='subquery')
-    treasurer = relationship("User", back_populates="treasurer_positions", foreign_keys=[treasurer_id], lazy='subquery')
+    chairperson = relationship("User", back_populates="chairperson_positions", foreign_keys=[chairperson_id], lazy="subquery")
+    pools = relationship("Pool", back_populates="unit", foreign_keys=[Pool.unit_id], lazy="subquery")
+    treasurer = relationship("User", back_populates="treasurer_positions", foreign_keys=[treasurer_id], lazy="subquery")
 
     # Affiliations
-    users = relationship("User", secondary=users_units_association_table, back_populates="units", lazy='subquery')
+    users = relationship("User", secondary=users_units_association_table, back_populates="units", lazy="subquery")
 
     def __repr__(self):
         return f"<Unit id={self.unit_id}, type={self.type}, name={self.name}>"

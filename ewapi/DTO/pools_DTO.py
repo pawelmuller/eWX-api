@@ -21,8 +21,8 @@ class Pool(Base):
     unit_id = Column(Integer, ForeignKey("units.unit_id"), primary_key=True)
 
     # Relations
-    unit = relationship("Unit", back_populates="pools", foreign_keys=[unit_id], lazy='subquery')
-    funding_sources = relationship("FundingSource", back_populates="pools", foreign_keys=[FundingSource.pool_id], lazy='subquery')
+    unit = relationship("Unit", back_populates="pools", foreign_keys=[unit_id], lazy="subquery")
+    funding_sources = relationship("FundingSource", back_populates="pools", foreign_keys=[FundingSource.pool_id], lazy="subquery")
 
     def __repr__(self):
         return f"<Pool id={self.pool_id}, year={self.year}, budget={self.budget}, unit={self.unit}>"

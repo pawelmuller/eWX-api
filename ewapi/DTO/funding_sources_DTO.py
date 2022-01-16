@@ -19,8 +19,8 @@ class FundingSource(Base):
     proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"), primary_key=True)
 
     # Relations
-    pools = relationship("Pool", back_populates="funding_sources", foreign_keys=[pool_id], lazy='subquery')
-    proposal = relationship("Proposal", back_populates="funding_sources", foreign_keys=[proposal_id], lazy='subquery')
+    pools = relationship("Pool", back_populates="funding_sources", foreign_keys=[pool_id], lazy="subquery")
+    proposal = relationship("Proposal", back_populates="funding_sources", foreign_keys=[proposal_id], lazy="subquery")
 
     def __repr__(self):
         return f"<FundingSource id={self.funding_source_id}, amount={self.amount}>"

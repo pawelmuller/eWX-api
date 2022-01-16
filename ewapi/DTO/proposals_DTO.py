@@ -23,12 +23,12 @@ class Proposal(Base):
     status_id = Column(Integer, ForeignKey("statuses.status_id"))
 
     # Relations
-    advances = relationship("Advance", back_populates="proposal", foreign_keys=[Advance.proposal_id])
-    comments = relationship("Comment", back_populates="proposal", foreign_keys=[Comment.proposal_id])
-    expenses = relationship("Expense", back_populates="proposal", foreign_keys=[Expense.proposal_id])
-    funding_sources = relationship("FundingSource", back_populates="proposal", foreign_keys=[FundingSource.proposal_id])
-    status = relationship("Status", back_populates="proposal", foreign_keys=[status_id])
-    user = relationship("User", back_populates="proposals", foreign_keys=[user_id])
+    advances = relationship("Advance", back_populates="proposal", foreign_keys=[Advance.proposal_id], lazy="subquery")
+    comments = relationship("Comment", back_populates="proposal", foreign_keys=[Comment.proposal_id], lazy="subquery")
+    expenses = relationship("Expense", back_populates="proposal", foreign_keys=[Expense.proposal_id], lazy="subquery")
+    funding_sources = relationship("FundingSource", back_populates="proposal", foreign_keys=[FundingSource.proposal_id], lazy="subquery")
+    status = relationship("Status", back_populates="proposal", foreign_keys=[status_id], lazy="subquery")
+    user = relationship("User", back_populates="proposals", foreign_keys=[user_id], lazy="subquery")
 
     def __repr__(self):
         return f"<Proposal id={self.proposal_id}, name={self.name}, desc={self.description}>"

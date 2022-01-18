@@ -1,9 +1,8 @@
 from fastapi import APIRouter, status, Response
-from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel
+from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel, FundingSourceModel
 from ewapi import CRUD
 from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
 from ewapi.utils.db_connection import get_session
-
 
 router = APIRouter()
 
@@ -63,3 +62,15 @@ def get_proposal_comments(proposal_id: int, response: Response):
 def create_proposal_comment(proposal_id: int, request: CreateProposalCommentRequestModel, response: Response):
     response.status_code = status.HTTP_404_NOT_FOUND
     return {"message": "Not implemented yet."}
+
+
+@router.post("/{proposal_id}/funding_sources")
+def create_funding_source(proposal_id: int, r: FundingSourceModel, response: Response):
+    with get_session() as session:
+        CRUD.funding_source.create_funding_source(session=session,
+                                                  proposal_id=proposal_id,
+                                                  amount=r.amount,
+                                                  pool_id=r.pool_id)
+        session.commit()
+    response.status_code = status.HTTP_201_CREATED
+    return {}

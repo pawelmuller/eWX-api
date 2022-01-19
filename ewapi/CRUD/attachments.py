@@ -3,17 +3,16 @@ from ewapi.DTO.attachments_DTO import Attachment
 from ewapi.utils.db_connection import get_session, get_next_id
 
 
-def get_attachments() -> list:
+def get_attachments(proposal_id: int) -> list:
     with get_session() as session:
-        attachments = session.query(Attachment).all()
+        attachments = session.query(Attachment).where(Proposal.proposal_id == proposal_id).all()
     return attachments
 
 
 def get_attachment(proposal_id: int, attachment_id: int) -> Attachment:
     with get_session() as session:
         attachment = session.query(Attachment).where(
-            Attachment.attachment_id == attachment_id and Proposal.proposal_id == proposal_id
-        ).first()
+            Attachment.attachment_id == attachment_id and Proposal.proposal_id == proposal_id).first()
     return attachment
 
 

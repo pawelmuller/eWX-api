@@ -73,6 +73,12 @@ def get_attachment(proposal_id: int, attachment_id: int):
     return StreamingResponse(BytesIO(attachment.file_content))
 
 
+@router.get('/{proposal_id}/attachment')
+def get_attachments(proposal_id: int):
+    attachments = CRUD.attachments.get_attachments(proposal_id)
+    return {"attachments": [{attachment.attachment_id: attachment.filename for attachment in attachments}]}
+
+
 @router.post('/{proposal_id}/attachment')
 async def add_attachment(proposal_id: int, file: UploadFile = File(...)):
     file_content = await file.read()

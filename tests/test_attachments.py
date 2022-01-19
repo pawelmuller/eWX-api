@@ -4,7 +4,7 @@ from ewapi.utils.db_connection import create_db_engine, get_session
 
 class TestAttachment:
     def test_verify_attachment(self):
-        create_db_engine(test=False)
+        create_db_engine(test=True)
         with get_session() as session:
             with open("tests/resources/financial_cat.jpg", 'rb') as file:
                 file_content = file.read()

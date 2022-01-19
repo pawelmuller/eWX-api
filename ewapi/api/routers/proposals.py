@@ -1,9 +1,11 @@
-from fastapi import APIRouter, status, Response
+from io import BytesIO
+from fastapi import APIRouter, status, Response, File, UploadFile
+from starlette.responses import StreamingResponse
+
 from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel
 from ewapi import CRUD
 from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
 from ewapi.utils.db_connection import get_session
-
 
 router = APIRouter()
 
@@ -63,3 +65,21 @@ def get_proposal_comments(proposal_id: int, response: Response):
 def create_proposal_comment(proposal_id: int, request: CreateProposalCommentRequestModel, response: Response):
     response.status_code = status.HTTP_404_NOT_FOUND
     return {"message": "Not implemented yet."}
+
+
+@router.get('/{proposal_id}/attachment/{attachment_id}')
+def get_attachment(proposal_id: int, attachment_id: int):
+    attachment = CRUD.attachments.get_attachment(proposal_id, attachment_id)
+    return StreamingResponse(BytesIO(attachment.file_content))
+
+
+@router.post('/{proposal_id}/attachment')
+async def add_attachment(proposal_id: int, file: UploadFile = File(...)):
+    file_content = await file.read()
+    with get_session() as session:
+        attachment_id = CRUD.attachments.create_attachment(session=session,
+                                                           proposal_id=proposal_id,
+                                                           filename=file.filename,
+                                                           file_content=file_content)
+        session.commit()
+    return {"id": attachment_id}

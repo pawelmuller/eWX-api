@@ -1,10 +1,10 @@
 from pydantic import Field, BaseModel
 
 
-class FundingSourcesModel(BaseModel):
-    funding_source_id: int \
-        = Field(..., title="Funding source id",
-                description="An ID of the funding source that will be requested to cover the expenses")
+class FundingSourceModel(BaseModel):
+    pool_id: int \
+        = Field(..., title="Pool id",
+                description="An ID of the pool that will be requested to cover the expenses")
     amount: int \
         = Field(..., title="Amount",
                 description="How much money will be requested from a funding source. "

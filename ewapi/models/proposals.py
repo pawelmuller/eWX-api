@@ -1,7 +1,7 @@
 from pydantic import Field, BaseModel
 from typing import Optional
 
-from ewapi.models import AdvanceModel, ExpenseModel, FundingSourcesModel
+from ewapi.models import AdvanceModel, ExpenseModel, FundingSourceModel
 
 
 class CreateProposalRequestModel(BaseModel):
@@ -17,7 +17,7 @@ class CreateProposalRequestModel(BaseModel):
     advances: Optional[list[AdvanceModel]] \
         = Field([], title="Proposal advances",
                 description="A list of advances described with dictionaries as an AdvanceModel")
-    funding_sources: Optional[list[FundingSourcesModel]] \
+    funding_sources: Optional[list[FundingSourceModel]] \
         = Field([], title="Proposal advances",
                 description="A list of funding sources described with dictionaries as an FundingSourcesModel")
 

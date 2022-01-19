@@ -2,8 +2,8 @@ from io import BytesIO
 from fastapi import APIRouter, status, Response, File, UploadFile
 from starlette.responses import StreamingResponse
 
-from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel
 from ewapi import CRUD
+from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel, FundingSourceModel
 from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
 from ewapi.utils.db_connection import get_session
 
@@ -83,3 +83,15 @@ async def add_attachment(proposal_id: int, file: UploadFile = File(...)):
                                                            file_content=file_content)
         session.commit()
     return {"id": attachment_id}
+
+  
+@router.post("/{proposal_id}/funding_sources")
+def create_funding_source(proposal_id: int, r: FundingSourceModel, response: Response):
+    with get_session() as session:
+        CRUD.funding_source.create_funding_source(session=session,
+                                                  proposal_id=proposal_id,
+                                                  amount=r.amount,
+                                                  pool_id=r.pool_id)
+        session.commit()
+    response.status_code = status.HTTP_201_CREATED
+    return {}

@@ -19,7 +19,7 @@ class Attachment(Base):
     file_content = Column(LargeBinary)
 
     # Relations
-    proposal = relationship("Proposal", back_populates="attachments", foreign_keys=[proposal_id], lazy="subquery")
+    proposal = relationship("Proposal", back_populates="attachments", foreign_keys=[proposal_id])
 
     def __repr__(self):
         return f"<Attachment id={self.attachment_id}, filename={self.filename}>"

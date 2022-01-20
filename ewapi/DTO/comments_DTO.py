@@ -16,8 +16,8 @@ class Comment(Base):
     proposal_id = Column(Integer, ForeignKey("proposals.proposal_id"))
 
     # Relations
-    user = relationship("User", back_populates="comments", foreign_keys=[user_id], lazy="subquery")
-    proposal = relationship("Proposal", back_populates="comments", foreign_keys=[proposal_id], lazy="subquery")
+    user = relationship("User", back_populates="comments", foreign_keys=[user_id])
+    proposal = relationship("Proposal", back_populates="comments", foreign_keys=[proposal_id])
 
     def __repr__(self):
         return f"<Comment id={self.comment_id}, time={self.time}, content={self.content}>"

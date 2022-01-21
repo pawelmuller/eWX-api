@@ -17,8 +17,8 @@ class Advance(Base):
     amount = Column(Integer)
 
     # Relations
-    user = relationship("User", back_populates="advances", foreign_keys=[recipient_id], lazy="subquery")
-    proposal = relationship("Proposal", back_populates="advances", foreign_keys=[proposal_id], lazy="subquery")
+    user = relationship("User", back_populates="advances", foreign_keys=[recipient_id])
+    proposal = relationship("Proposal", back_populates="advances", foreign_keys=[proposal_id])
 
     def __repr__(self):
         return f"<Advance user={self.user}, proposal={self.proposal}, amount={self.amount}>"

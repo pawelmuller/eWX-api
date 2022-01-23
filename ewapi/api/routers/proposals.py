@@ -3,13 +3,14 @@ from fastapi import APIRouter, status, Response, File, UploadFile
 from starlette.responses import StreamingResponse
 
 from ewapi import CRUD
-from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel, FundingSourceModel
+from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel, FundingSourceModel, \
+    ProposalResponseModel, ProposalsListResponseModel, CreateEntityResponseModel
 from ewapi.managers.proposals_manager import ProposalManager
 
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=ProposalsListResponseModel)
 def get_proposals(response: Response):
     proposals = CRUD.proposals.get_proposals()
     if proposals:
@@ -18,7 +19,7 @@ def get_proposals(response: Response):
     response.status_code = status.HTTP_404_NOT_FOUND
 
 
-@router.get("/{proposal_id}")
+@router.get("/{proposal_id}", response_model=ProposalResponseModel)
 def get_proposal(proposal_id: int, response: Response):
     proposal = CRUD.proposals.get_proposal(proposal_id)
     if proposal:
@@ -27,7 +28,7 @@ def get_proposal(proposal_id: int, response: Response):
     response.status_code = status.HTTP_404_NOT_FOUND
 
 
-@router.post("/")
+@router.post("/", response_model=CreateEntityResponseModel)
 def create_proposal(r: CreateProposalRequestModel, response: Response):
     new_proposal_id = ProposalManager.send_proposal(r)
     response.status_code = status.HTTP_201_CREATED

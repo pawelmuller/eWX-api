@@ -1,6 +1,8 @@
 from fastapi import APIRouter, status, Response
 from ewapi.models import CreateUnitRequestModel, UnitResponseModel, UnitsListResponseModel, CreateEntityResponseModel
 from ewapi import CRUD
+from ewapi.managers.units_manager import UnitsManager
+
 
 router = APIRouter()
 
@@ -25,11 +27,7 @@ def get_unit(unit_id: int, response: Response):
 
 @router.post("/", response_model=CreateEntityResponseModel)
 def create_unit(r: CreateUnitRequestModel, response: Response):
-    new_unit_id, error_message = CRUD.units.create_unit(unit_type=r.type,
-                                                        name=r.name,
-                                                        description=r.description,
-                                                        chairperson_id=r.chairperson_id,
-                                                        treasurer_id=r.treasurer_id)
+    new_unit_id, error_message = UnitsManager.create_unit(r)
     if new_unit_id:
         response.status_code = status.HTTP_201_CREATED
         return {"id": new_unit_id}
@@ -38,12 +36,7 @@ def create_unit(r: CreateUnitRequestModel, response: Response):
 
 @router.put("/{unit_id}")
 def modify_unit(unit_id: int, r: CreateUnitRequestModel, response: Response):
-    is_successful, error_message = CRUD.units.modify_unit(unit_id=unit_id,
-                                                          unit_type=r.type,
-                                                          name=r.name,
-                                                          description=r.description,
-                                                          chairperson_id=r.chairperson_id,
-                                                          treasurer_id=r.treasurer_id)
+    is_successful, error_message = UnitsManager.modify_unit(unit_id, r)
     if is_successful:
         response.status_code = status.HTTP_200_OK
         return

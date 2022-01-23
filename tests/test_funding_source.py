@@ -12,15 +12,15 @@ class TestFundingSource:
                                                              description="DESCRIPTION",
                                                              status_id=1)
 
-            CRUD.funding_source.create_funding_source(session=session,
-                                                      pool_id=1,
-                                                      proposal_id=new_proposal_id,
-                                                      amount=100)
+            CRUD.funding_sources.create_funding_source(session=session,
+                                                       pool_id=1,
+                                                       proposal_id=new_proposal_id,
+                                                       amount=100)
 
-            CRUD.funding_source.create_funding_source(session=session,
-                                                      pool_id=2,
-                                                      proposal_id=new_proposal_id,
-                                                      amount=100)
+            CRUD.funding_sources.create_funding_source(session=session,
+                                                       pool_id=2,
+                                                       proposal_id=new_proposal_id,
+                                                       amount=100)
             session.commit()
         funding_sources = CRUD.proposals.get_proposal(new_proposal_id).funding_sources
         assert len(funding_sources) == 2

@@ -1,10 +1,10 @@
-from ewapi.models import UnitResponseModel
+from ewapi.models import CreateUnitRequestModel
 from ewapi import CRUD
 
 
 class UnitsManager(object):
     @classmethod
-    def create_unit(cls, r: UnitResponseModel):
+    def create_unit(cls, r: CreateUnitRequestModel):
         new_unit_id, error_message = CRUD.units.create_unit(unit_type=r.type,
                                                             name=r.name,
                                                             description=r.description,
@@ -13,7 +13,7 @@ class UnitsManager(object):
         return new_unit_id, error_message
 
     @classmethod
-    def modify_unit(cls, unit_id: int, r: UnitResponseModel):
+    def modify_unit(cls, unit_id: int, r: CreateUnitRequestModel):
         is_successful, error_message = CRUD.units.modify_unit(unit_id=unit_id,
                                                               unit_type=r.type,
                                                               name=r.name,

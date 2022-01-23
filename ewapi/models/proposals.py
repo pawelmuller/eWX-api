@@ -1,7 +1,7 @@
 from pydantic import Field, BaseModel
 from typing import Optional
 
-from ewapi.models import AdvanceModel, ExpenseModel, FundingSourceModel
+from ewapi.models import AdvanceModel, ExpenseRequestModel, ExpenseResponseModel, FundingSourceModel
 
 
 class CreateProposalRequestModel(BaseModel):
@@ -11,7 +11,7 @@ class CreateProposalRequestModel(BaseModel):
     description: Optional[str] \
         = Field("", title="Proposal description",
                 max_length=10000)
-    expenses: Optional[list[ExpenseModel]] \
+    expenses: Optional[list[ExpenseRequestModel]] \
         = Field([], title="Proposal expenses",
                 description="A list of expenses described with dictionaries as an ExpenseModel")
     advances: Optional[list[AdvanceModel]] \
@@ -38,7 +38,7 @@ class ProposalResponseModel(BaseModel):
     description: Optional[str] \
         = Field("", title="Proposal description",
                 max_length=10000)
-    expenses: Optional[list[ExpenseModel]] \
+    expenses: Optional[list[ExpenseResponseModel]] \
         = Field([], title="Proposal expenses",
                 description="A list of expenses described with dictionaries as an ExpenseModel")
     advances: Optional[list[AdvanceModel]] \
@@ -47,6 +47,9 @@ class ProposalResponseModel(BaseModel):
     funding_sources: Optional[list[FundingSourceModel]] \
         = Field([], title="Proposal advances",
                 description="A list of funding sources described with dictionaries as an FundingSourcesModel")
+
+    class Config:
+        orm_mode = True
 
 
 class ProposalsListResponseModel(BaseModel):

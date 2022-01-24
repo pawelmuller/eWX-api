@@ -1,7 +1,7 @@
 from pydantic import Field, BaseModel
 from typing import Optional
 
-from ewapi.models import AdvanceModel, ExpenseRequestModel, ExpenseResponseModel, FundingSourceModel
+from ewapi.models import AdvanceRequestModel, ExpenseRequestModel, ExpenseResponseModel, FundingSourceRequestModel
 
 
 class CreateProposalRequestModel(BaseModel):
@@ -14,10 +14,10 @@ class CreateProposalRequestModel(BaseModel):
     expenses: Optional[list[ExpenseRequestModel]] \
         = Field([], title="Proposal expenses",
                 description="A list of expenses described with dictionaries as an ExpenseModel")
-    advances: Optional[list[AdvanceModel]] \
+    advances: Optional[list[AdvanceRequestModel]] \
         = Field([], title="Proposal advances",
                 description="A list of advances described with dictionaries as an AdvanceModel")
-    funding_sources: Optional[list[FundingSourceModel]] \
+    funding_sources: Optional[list[FundingSourceRequestModel]] \
         = Field([], title="Proposal advances",
                 description="A list of funding sources described with dictionaries as an FundingSourcesModel")
 
@@ -41,10 +41,10 @@ class ProposalResponseModel(BaseModel):
     expenses: Optional[list[ExpenseResponseModel]] \
         = Field([], title="Proposal expenses",
                 description="A list of expenses described with dictionaries as an ExpenseModel")
-    advances: Optional[list[AdvanceModel]] \
+    advances: Optional[list[AdvanceRequestModel]] \
         = Field([], title="Proposal advances",
                 description="A list of advances described with dictionaries as an AdvanceModel")
-    funding_sources: Optional[list[FundingSourceModel]] \
+    funding_sources: Optional[list[FundingSourceRequestModel]] \
         = Field([], title="Proposal advances",
                 description="A list of funding sources described with dictionaries as an FundingSourcesModel")
 
@@ -53,6 +53,6 @@ class ProposalResponseModel(BaseModel):
 
 
 class ProposalsListResponseModel(BaseModel):
-    units: Optional[list[ProposalResponseModel]] \
+    proposals: Optional[list[ProposalResponseModel]] \
         = Field([], title="Proposals",
                 description="A list of proposals described with ProposalResponseModel")

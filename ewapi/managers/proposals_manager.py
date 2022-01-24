@@ -1,5 +1,5 @@
 from ewapi.utils.db_connection import get_session
-from ewapi.models import CreateProposalRequestModel, FundingSourceModel
+from ewapi.models import CreateProposalRequestModel, FundingSourceRequestModel
 
 from ewapi import CRUD
 from ewapi.utils.decorators.catch_db_exceptions import catch_db_exceptions
@@ -44,7 +44,7 @@ class ProposalManager(object):
         return attachment_id
 
     @classmethod
-    def send_funding_source(cls, proposal_id: int, r: FundingSourceModel):
+    def send_funding_source(cls, proposal_id: int, r: FundingSourceRequestModel):
         with get_session() as session:
             CRUD.funding_sources.create_funding_source(session=session,
                                                        proposal_id=proposal_id,

@@ -3,7 +3,7 @@ from fastapi import APIRouter, status, Response, File, UploadFile
 from starlette.responses import StreamingResponse
 
 from ewapi import CRUD
-from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel, FundingSourceModel, \
+from ewapi.models import CreateProposalRequestModel, CreateProposalCommentRequestModel, FundingSourceRequestModel, \
     ProposalResponseModel, ProposalsListResponseModel, CreateEntityResponseModel
 from ewapi.managers.proposals_manager import ProposalManager
 
@@ -66,7 +66,7 @@ async def add_attachment(proposal_id: int, file: UploadFile = File(...)):
 
   
 @router.post("/{proposal_id}/funding_sources")
-def create_funding_source(proposal_id: int, r: FundingSourceModel, response: Response):
+def create_funding_source(proposal_id: int, r: FundingSourceRequestModel, response: Response):
     ProposalManager.send_funding_source(proposal_id, r)
     response.status_code = status.HTTP_201_CREATED
     return {}

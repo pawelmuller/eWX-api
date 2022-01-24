@@ -12,9 +12,6 @@ class AdvanceRequestModel(BaseModel):
 
 
 class AdvanceResponseModel(BaseModel):
-    advance_id: int \
-        = Field(..., title="Advance id",
-                description="An ID of the expense")
     amount: int \
         = Field(..., title="Advance amount",
                 description="How much money will be requested for advance. "
